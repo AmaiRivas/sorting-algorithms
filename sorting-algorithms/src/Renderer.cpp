@@ -2,6 +2,7 @@
 
 void Renderer::Clear() const
 {
+    glClearColor(0, 0.372, 0.450, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 

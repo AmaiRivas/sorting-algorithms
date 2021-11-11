@@ -1,21 +1,13 @@
 ﻿  Application.cpp
-C:\Users\Amai\Documents\GitHub\sorting-algorithms\sorting-algorithms\src\Application.cpp(78,69): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\Amai\Documents\GitHub\sorting-algorithms\sorting-algorithms\src\Application.cpp(83,67): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\Amai\Documents\GitHub\sorting-algorithms\sorting-algorithms\src\Application.cpp(148,61): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\Amai\Documents\GitHub\sorting-algorithms\sorting-algorithms\src\Application.cpp(187,57): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\Amai\Documents\GitHub\sorting-algorithms\sorting-algorithms\src\Application.cpp(260,19): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
+C:\Users\Amai\Documents\GitHub\sorting-algorithms\sorting-algorithms\src\Application.cpp(74,69): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Amai\Documents\GitHub\sorting-algorithms\sorting-algorithms\src\Application.cpp(79,67): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Amai\Documents\GitHub\sorting-algorithms\sorting-algorithms\src\Application.cpp(135,61): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Amai\Documents\GitHub\sorting-algorithms\sorting-algorithms\src\Application.cpp(166,57): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Amai\Documents\GitHub\sorting-algorithms\sorting-algorithms\src\Application.cpp(237,19): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
           with
           [
               _Rep=std::chrono::system_clock::rep
           ]
-  IndexBuffer.cpp
-  Renderer.cpp
-C:\Users\Amai\Documents\GitHub\sorting-algorithms\sorting-algorithms\src\Renderer.cpp(5,39): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
-  Shader.cpp
-  VertexArray.cpp
-  VertexBuffer.cpp
-  VertexBufferLayout.cpp
-  Generating Code...
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
 LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
 glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\Amai\Documents\GitHub\sorting-algorithms\Debug\vc120.pdb'; linking object as if no debug info

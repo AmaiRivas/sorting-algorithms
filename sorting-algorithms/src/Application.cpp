@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <fstream>
+
 #include <string>
 #include <sstream>
 #include <algorithm>
@@ -18,13 +19,15 @@
 #include "Shader.h"
 #include "Renderer.h"
 
-const unsigned int scale = 1;
-const unsigned int elementCount = 2000 / scale;
+
+const unsigned int scale = 4;
+const unsigned int elementCount = 200 / scale;
 float heightArray[elementCount];
 unsigned int counter = 0;
 unsigned int limit = elementCount - 1;
 unsigned int index = 0;
 bool finished = false;
+
 
 void CreateArray()
 {
@@ -65,15 +68,16 @@ static void DrawRectangles(unsigned int indices[], float positions[], Renderer& 
         //Setting up the object
         VertexBuffer vb(positions, 4 * 2 * sizeof(float));
         va.AddBuffer(vb, layout);
-        shader.Bind();
 
-        //Setting color of the rectangle
-        if (height == heightArray[counter+1] || height == heightArray[counter+2])
+        //Color for correct (from this palette: https://coolors.co/001219-005f73-0a9396-94d2bd-e9d8a6-ee9b00-ca6702-bb3e03-ae2012-9b2226 )
+
+        shader.Bind();
+        if (height == heightArray[counter + 1] || height == heightArray[counter + 2])
         {
             //Color of "evaluating"
             shader.SetUniform4f("u_Color", 0.733, 0.243, 0.011, 1.0f);
         }
-        else if (index >= limit+1)
+        else if (index >= limit + 1)
         {
             //Color of "correct"
             shader.SetUniform4f("u_Color", 0.2, 0.901, 0.337, 1.0f);
@@ -83,7 +87,7 @@ static void DrawRectangles(unsigned int indices[], float positions[], Renderer& 
             //Color of "not touched"
             shader.SetUniform4f("u_Color", 0.933f, 0.607f, 0.0f, 1.0f);
         }
-          
+
 
         //Translation
         glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(xShift, 10, 0));
@@ -91,8 +95,10 @@ static void DrawRectangles(unsigned int indices[], float positions[], Renderer& 
         shader.SetUniformMat4f("u_MVP", mvp);
         shader.Unbind();
 
-        //The artist
         renderer.Draw(va, ib, shader);
+
+
+        xShift += 9.5 * scale;
 
         //Bubble sort
         if (!finished)
@@ -108,12 +114,11 @@ static void DrawRectangles(unsigned int indices[], float positions[], Renderer& 
             }
         }
 
-        xShift += 9.5 * scale;
         index++;
     }
 }
 
-static void DrawBorders(unsigned int indices[], Renderer& renderer, Shader& shader, IndexBuffer& ib, VertexArray& va, VertexBufferLayout& layout)
+static void DrawBorders(unsigned int indices[], Renderer& renderer, Shader& shader)
 {
     //MVP matrix
     glm::mat4 proj = glm::ortho(0.0f, 1920.0f, 0.0f, 1080.0f, -1.0f, 1.0f);
@@ -128,8 +133,16 @@ static void DrawBorders(unsigned int indices[], Renderer& renderer, Shader& shad
         };
 
         //Setting up the object
+        VertexArray va;
         VertexBuffer vb(positionsBorderLR, 4 * 2 * sizeof(float));
+        VertexBufferLayout layout;
+        layout.Push<float>(2);
         va.AddBuffer(vb, layout);
+        IndexBuffer ib(indices, 6);
+
+        va.Unbind();
+        vb.Unbind();
+        ib.Unbind();
 
         //Color
         shader.SetUniform4f("u_Color", 0, 0.070, 0.098, 1.0f);
@@ -149,7 +162,7 @@ static void DrawBorders(unsigned int indices[], Renderer& renderer, Shader& shad
         renderer.Draw(va, ib, shader);
     }
 
-   //Border 2 and 4 (up and down)
+    //Border 2 and 4 (up and down)
 
     float positionsBorderUD[] = {
     0.0f,   0.0f,
@@ -159,8 +172,16 @@ static void DrawBorders(unsigned int indices[], Renderer& renderer, Shader& shad
     };
 
     //Setting up the object
+    VertexArray va;
     VertexBuffer vb(positionsBorderUD, 4 * 2 * sizeof(float));
+    VertexBufferLayout layout;
+    layout.Push<float>(2);
     va.AddBuffer(vb, layout);
+    IndexBuffer ib(indices, 6);
+
+    va.Unbind();
+    vb.Unbind();
+    ib.Unbind();
 
     //Color
     shader.SetUniform4f("u_Color", 0, 0.070, 0.098, 1.0f);
@@ -213,6 +234,7 @@ int main(void)
     //This prints the OpenGL version on the terminal
     std::cout << glGetString(GL_VERSION) << std::endl;
 
+    //Positions
     float positions[] = {
         0.0f * scale,   0.0f * scale,
         9.5f * scale,  0.0f * scale,
@@ -220,6 +242,7 @@ int main(void)
         0.0f * scale,   0.0f * scale,
     };
 
+    //Starting initialization
     unsigned int indices[] = {
         0, 1, 2,
         2, 3, 0
@@ -247,18 +270,19 @@ int main(void)
         glfwPollEvents();
     }
 
-    VertexArray va;
-    IndexBuffer ib(indices, 6);
-    VertexBufferLayout layout;
-    layout.Push<float>(2);
-
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
         renderer.Clear();
 
+        //Test
+        VertexArray va;
+        IndexBuffer ib(indices, 6);
+        VertexBufferLayout layout;
+        layout.Push<float>(2);
+
         DrawRectangles(indices, positions, renderer, shader, ib, va, layout);
-        DrawBorders(indices, renderer, shader, ib, va, layout);
+        DrawBorders(indices, renderer, shader);
         counter++;
 
         /* Swap front and back buffers */
@@ -272,4 +296,3 @@ int main(void)
     glfwTerminate();
     return 0;
 }
-
